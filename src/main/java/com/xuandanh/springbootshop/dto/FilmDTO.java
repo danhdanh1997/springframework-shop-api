@@ -1,7 +1,7 @@
 package com.xuandanh.springbootshop.dto;
 
-import com.xuandanh.springbootshop.domain.Language;
 import lombok.*;
+
 import java.time.Instant;
 @Data
 @Getter
@@ -10,15 +10,16 @@ import java.time.Instant;
 @NoArgsConstructor
 public class FilmDTO {
     private String filmId;
+    private String filmName;
     private String title;
     private String description;
     private Instant releaseYear;
-    private int rentalDuration;
-    private Long rentalRate;
-    private Long replacementCost;
-    private int rating;
+    private String rentalDuration;
+    private String rentalRate;
+    private String replacementCost;
+    private String rating;
     private Instant lastUpdate;
     private String specialFeature;
     private String imageUrl;
-    private Language language;
+    private int language_id;
 }

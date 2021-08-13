@@ -26,10 +26,10 @@ public class Address {
     private String district;
 
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Instant lastUpdate = Instant.now();
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "countries_id",referencedColumnName = "countries_id")
+    @JoinColumn(name = "cities_id",referencedColumnName = "cities_id")
     private City city;
 
     @OneToMany(mappedBy="address",cascade=CascadeType.ALL)

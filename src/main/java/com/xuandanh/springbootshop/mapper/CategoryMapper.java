@@ -1,8 +1,6 @@
 package com.xuandanh.springbootshop.mapper;
 
-import com.xuandanh.springbootshop.domain.Address;
 import com.xuandanh.springbootshop.domain.Category;
-import com.xuandanh.springbootshop.dto.AddressDTO;
 import com.xuandanh.springbootshop.dto.CategoryDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -21,6 +19,9 @@ public class CategoryMapper {
         return modelMapper.map(category,CategoryDTO.class);
     }
 
+    public List<CategoryDTO>categoryToCategoryDTO(List<Category>categoryList){
+        return categoryList.stream().filter(Objects::nonNull).map(this::categoryToCategoryDTO).collect(Collectors.toList());
+    }
     public List<Category> categoryDTOToCategory(List<CategoryDTO> categoryDTOList) {
         return categoryDTOList.stream().filter(Objects::nonNull).map(this::categoryDTOToCategory).collect(Collectors.toList());
     }
@@ -29,4 +30,6 @@ public class CategoryMapper {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(categoryDTO , Category.class);
     }
+
+
 }

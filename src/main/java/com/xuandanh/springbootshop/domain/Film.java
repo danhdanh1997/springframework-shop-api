@@ -20,6 +20,9 @@ public class Film {
     @Id
     private String filmId;
 
+    @Column(name = "film_name")
+    private String filmName;
+
     @Column(name = "title")
     private String title;
 
@@ -27,22 +30,22 @@ public class Film {
     private String description;
 
     @Column(name = "release_year")
-    private Instant releaseYear;
+    private Instant releaseYear = Instant.now();
 
     @Column(name = "rental_duration")
-    private int rentalDuration;
+    private String rentalDuration;
 
     @Column(name = "rental_rate")
-    private Long rentalRate;
+    private String rentalRate;
 
     @Column(name = "replacement_cost")
-    private Long replacementCost;
+    private String replacementCost;
 
     @Column(name = "rating")
-    private int rating;
+    private String rating;
 
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Instant lastUpdate = Instant.now();
 
     @Column(name = "special_feature")
     private String specialFeature;

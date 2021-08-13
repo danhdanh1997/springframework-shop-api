@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 public class ActorService {
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
+    private final Logger log = LoggerFactory.getLogger(ActorService.class);
     private final ActorRepository actorRepository;
     private final ActorMapper actorMapper;
     private final CacheManager cacheManager;
@@ -60,8 +60,8 @@ public class ActorService {
                     actor1.setFirstName(actor.getFirstName());
                     actor1.setLastName(actor.getLastName());
                     actor1.setLastUpdate(actor.getLastUpdate());
-                    this.clearActorCaches(actor1);
-                    log.debug("Changed Information for Actor: {}", actor);
+                    //this.clearActorCaches(actor1);
+                   // log.info("Changed Information for Actor: {}", actor);
                     return actorMapper.actorToactorDTO(actorRepository.save(actor1));
                 });
     }
@@ -74,8 +74,9 @@ public class ActorService {
         actorRepository.findById(actor.getActorId())
                 .ifPresent(actor1 -> {
                     actorRepository.delete(actor1);
-                    this.clearActorCaches(actor1);
+                    //this.clearActorCaches(actor1);
                     log.debug("Deleted Actor: {}", actor);
                 });
     }
+
 }

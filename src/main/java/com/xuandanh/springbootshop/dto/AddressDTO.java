@@ -1,7 +1,7 @@
 package com.xuandanh.springbootshop.dto;
 
-import com.xuandanh.springbootshop.domain.City;
 import lombok.*;
+
 import java.time.Instant;
 @Data
 @Getter
@@ -13,5 +13,5 @@ public class AddressDTO {
     private String addressName;
     private String district;
     private Instant lastUpdate;
-    private City city;
+    private int citiesId;
 }

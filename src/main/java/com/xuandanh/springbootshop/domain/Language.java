@@ -20,6 +20,6 @@ public class Language {
     private String languageName;
 
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Instant lastUpdate  = Instant.now();
 
 }

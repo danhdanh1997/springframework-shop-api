@@ -1,8 +1,10 @@
 package com.xuandanh.springbootshop.dto;
 
-import com.xuandanh.springbootshop.domain.Country;
 import lombok.*;
+
 import java.time.Instant;
+import java.util.Set;
+
 @Data
 @Getter
 @Setter
@@ -10,7 +12,8 @@ import java.time.Instant;
 @NoArgsConstructor
 public class CityDTO {
     private int citiesId;
-    private String countriesName;
+    private String citiesName;
     private Instant lastUpdate;
-    private Country country;
+    private int countriesId;
+    private Set<AddressDTO>addressDTOSet;
 }

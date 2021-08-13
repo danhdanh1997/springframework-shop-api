@@ -3,9 +3,13 @@ package com.xuandanh.springbootshop.restapi;
 import com.xuandanh.springbootshop.domain.RefreshToken;
 import com.xuandanh.springbootshop.exception.TokenRefreshException;
 import com.xuandanh.springbootshop.jwt.JwtUtils;
-import com.xuandanh.springbootshop.payload.*;
+import com.xuandanh.springbootshop.payload.JwtRefreshResponse;
+import com.xuandanh.springbootshop.payload.LoginRequest;
+import com.xuandanh.springbootshop.payload.TokenRefreshRequest;
+import com.xuandanh.springbootshop.payload.TokenRefreshResponse;
 import com.xuandanh.springbootshop.service.RefreshTokenService;
 import com.xuandanh.springbootshop.service.UserDetailsImpl;
+import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +31,7 @@ public class RefreshTokenResources {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final RefreshTokenService refreshTokenService;
-
+    private static final Logger logger = Logger.getLogger(AuthResources.class);
     public AuthenticationManager getAuthenticationManager() {
         return authenticationManager;
     }
@@ -60,7 +64,7 @@ public class RefreshTokenResources {
 
         List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-
+        logger.info("Login User returned [API[: " + userDetails);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
 
         return ResponseEntity.ok(new JwtRefreshResponse(jwt, refreshToken.getToken(), userDetails.getId(),

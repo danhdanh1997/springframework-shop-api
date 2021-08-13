@@ -4,8 +4,10 @@ package com.xuandanh.springbootshop.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Getter
@@ -14,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "country")
-public class Country {
+public class Country implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="countries_id")
@@ -24,8 +26,8 @@ public class Country {
     private String countriesName;
 
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Instant lastUpdate = Instant.now();
 
-    @OneToMany(mappedBy="country",cascade=CascadeType.ALL)
-    private List<City> cities;
+    @OneToMany(mappedBy="country",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<City>cities = new HashSet<>();
 }
