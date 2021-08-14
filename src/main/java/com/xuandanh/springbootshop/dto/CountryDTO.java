@@ -3,7 +3,6 @@ package com.xuandanh.springbootshop.dto;
 import lombok.*;
 
 import java.time.Instant;
-import java.util.Set;
 
 @Data
 @Getter
@@ -14,5 +13,4 @@ public class CountryDTO {
     private int countriesId;
     private String countriesName;
     private Instant lastUpdate;
-    private Set<CityDTO>cityDTOSet;
 }

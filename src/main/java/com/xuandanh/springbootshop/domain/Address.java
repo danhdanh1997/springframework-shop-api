@@ -1,8 +1,11 @@
 package com.xuandanh.springbootshop.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 
@@ -13,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "address")
-public class Address {
+public class Address  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="address_id")
@@ -28,13 +31,18 @@ public class Address {
     @Column(name = "last_update")
     private Instant lastUpdate = Instant.now();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cities_id",referencedColumnName = "cities_id")
     private City city;
 
-    @OneToMany(mappedBy="address",cascade=CascadeType.ALL)
-    private List<Store> stores;
 
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "address")
+    private Store store;
+
+    @Transient
+    @Fetch(value= FetchMode.SELECT)
     @OneToMany(mappedBy="address",cascade=CascadeType.ALL)
     private List<Customer> customers;
 

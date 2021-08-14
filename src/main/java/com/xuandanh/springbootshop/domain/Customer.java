@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer  implements Serializable {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     @Column(columnDefinition = "CHAR(32)",name = "customer_id")
@@ -36,16 +37,16 @@ public class Customer {
 
     @CreatedDate
     @Column(name = "create_date")
-    private Instant createDate;
+    private Instant createDate  = Instant.now();
 
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Instant lastUpdate  = Instant.now();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id",referencedColumnName = "address_id")
     private Address address;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id",referencedColumnName = "store_id")
     private Store store;
 

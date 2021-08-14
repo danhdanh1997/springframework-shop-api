@@ -45,8 +45,8 @@ public class Staff {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "store_id", referencedColumnName = "store_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_id",referencedColumnName = "store_id")
     private Store store;
 
     @ManyToOne(cascade = CascadeType.ALL)

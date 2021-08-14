@@ -9,9 +9,9 @@ import java.time.Instant;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityDTO {
-    private int citiesId;
-    private String citiesName;
+public class StoreDTO {
+    private int storeId;
+    private String storeName;
+    private AddressDTO address;
     private Instant lastUpdate;
-    private CountryDTO country;
 }

@@ -13,5 +13,5 @@ public class AddressDTO {
     private String addressName;
     private String district;
     private Instant lastUpdate;
-    private int citiesId;
+    private CityDTO city;
 }

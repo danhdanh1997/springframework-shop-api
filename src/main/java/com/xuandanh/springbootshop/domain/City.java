@@ -26,7 +26,7 @@ public class City implements Serializable {
     @Column(name = "last_update")
     private Instant lastUpdate = Instant.now();
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "countries_id",referencedColumnName = "countries_id")
     private Country country;
 

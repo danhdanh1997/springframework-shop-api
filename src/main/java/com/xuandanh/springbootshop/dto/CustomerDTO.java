@@ -1,8 +1,7 @@
 package com.xuandanh.springbootshop.dto;
 
-import com.xuandanh.springbootshop.domain.Address;
-import com.xuandanh.springbootshop.domain.Store;
 import lombok.*;
+
 import java.time.Instant;
 @Data
 @Getter
@@ -17,6 +16,5 @@ public class CustomerDTO {
     private boolean active;
     private Instant createDate;
     private Instant lastUpdate;
-    private Address address;
-    private Store store;
+    private AddressDTO address;
 }

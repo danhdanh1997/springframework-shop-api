@@ -23,18 +23,18 @@ public class Store {
     private String storeName;
 
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Instant lastUpdate = Instant.now();
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id",referencedColumnName = "address_id")
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
     @OneToMany(mappedBy="store",cascade=CascadeType.ALL)
     private List<Customer> customers;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "manager_staff_id", referencedColumnName = "staff_id")
-    private Staff staff;
+    @OneToMany(mappedBy="store",cascade=CascadeType.ALL)
+    private List<Staff> staff;
 
     @OneToMany(mappedBy="store",cascade=CascadeType.ALL)
     private List<Inventory> inventories;

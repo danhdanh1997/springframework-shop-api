@@ -3,7 +3,9 @@ package com.xuandanh.springbootshop.restapi;
 import com.xuandanh.springbootshop.domain.Address;
 import com.xuandanh.springbootshop.dto.AddressDTO;
 import com.xuandanh.springbootshop.dto.CityDTO;
+import com.xuandanh.springbootshop.exception.ResourceNotFoundException;
 import com.xuandanh.springbootshop.repository.AddressRepository;
+import com.xuandanh.springbootshop.repository.CityRepository;
 import com.xuandanh.springbootshop.service.AddressService;
 import com.xuandanh.springbootshop.service.CityService;
 import org.slf4j.Logger;
@@ -22,7 +24,12 @@ public class AddressResources {
     private final AddressService addressService;
     private final AddressRepository addressRepository;
     private final CityService cityService;
+    private final CityRepository cityRepository;
     private final Logger log = LoggerFactory.getLogger(AddressResources.class);
+
+    public CityRepository getCityRepository() {
+        return cityRepository;
+    }
 
     public CityService getCityService() {
         return cityService;
@@ -36,10 +43,11 @@ public class AddressResources {
         return addressRepository;
     }
 
-    public AddressResources(AddressService addressService, AddressRepository addressRepository,CityService cityService){
+    public AddressResources(AddressService addressService, AddressRepository addressRepository,CityService cityService,CityRepository cityRepository){
         this.addressRepository = addressRepository;
         this.addressService = addressService;
         this.cityService = cityService;
+        this.cityRepository = cityRepository;
     }
 
     @GetMapping("/address/findOne/{addressId}")
@@ -69,7 +77,7 @@ public class AddressResources {
         if (city.isPresent()){
             log.info("created add successfully");
             response.put("created add successfully"+ addressService.createAddress(citiesId,address),Boolean.TRUE);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(addressService.createAddress(citiesId,address));
         }
         log.error("city with id:"+citiesId+" not exist");
         response.put("city with id:"+citiesId+" not exist",Boolean.FALSE);
@@ -90,5 +98,20 @@ public class AddressResources {
         }
         log.info("update address successfully");
         return ResponseEntity.ok(addressService.updateAddress(address));
+    }
+
+    @DeleteMapping("/city/{citiesId}/address/deleteAddress/{addressId}")
+    public ResponseEntity<?>delete(@PathVariable("citiesId")int citiesId,@PathVariable("addressId")int addressId) {
+        Map<String, Boolean> response = new HashMap<>();
+        return addressRepository.findById(addressId)
+                .map(address -> {
+                    if (cityService.findOne(citiesId).isPresent()){
+                        addressRepository.delete(address);
+                        response.put("delete address with id:"+addressId+" successfully",Boolean.TRUE);
+                        return ResponseEntity.ok(response);
+                    }
+                    response.put("city with id:"+citiesId+" not exist"+" && "+" address with id:"+addressId+" not exist",Boolean.FALSE);
+                    return ResponseEntity.ok(response);
+                }).orElseThrow(()->new ResourceNotFoundException("city with id:"+citiesId+" not exist"+" && "+" address with id:"+addressId+" not exist"));
     }
 }
