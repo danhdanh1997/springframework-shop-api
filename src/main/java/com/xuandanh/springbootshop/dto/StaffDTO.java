@@ -1,8 +1,7 @@
 package com.xuandanh.springbootshop.dto;
 
-import com.xuandanh.springbootshop.domain.Address;
-import com.xuandanh.springbootshop.domain.Store;
 import lombok.*;
+
 import java.time.Instant;
 @Data
 @Getter
@@ -19,7 +18,5 @@ public class StaffDTO {
     private boolean active;
     private Instant lastUpdate;
     private String imageUrl;
-    private Store store;
-    private Address address;
-
+    private StoreDTO store;
 }

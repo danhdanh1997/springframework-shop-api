@@ -1,8 +1,5 @@
 package com.xuandanh.springbootshop.dto;
 
-import com.xuandanh.springbootshop.domain.Customer;
-import com.xuandanh.springbootshop.domain.Inventory;
-import com.xuandanh.springbootshop.domain.Staff;
 import lombok.*;
 
 import java.time.Instant;
@@ -17,7 +14,7 @@ public class RentalDTO {
     private Instant createDate;
     private Instant returnDate;
     private Instant lastUpdate;
-    private Inventory inventory;
-    private Customer customer;
-    private Staff staff;
+    private InventoryDTO inventory;
+    private CustomerDTO customer;
+    private StaffDTO staff;
 }

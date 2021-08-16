@@ -53,11 +53,11 @@ public class Film {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id",referencedColumnName = "language_id")
     private Language language;
 
-    @OneToMany(mappedBy="film",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="film",cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval = true)
     private List<Inventory> inventories;
 
 }

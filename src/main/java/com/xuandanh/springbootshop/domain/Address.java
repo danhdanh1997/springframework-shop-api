@@ -1,10 +1,12 @@
 package com.xuandanh.springbootshop.domain;
 
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
@@ -37,15 +39,15 @@ public class Address  implements Serializable {
 
 
     @OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
+            cascade={CascadeType.ALL,CascadeType.REMOVE},
             mappedBy = "address")
     private Store store;
 
     @Transient
     @Fetch(value= FetchMode.SELECT)
-    @OneToMany(mappedBy="address",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="address", cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval = true)
     private List<Customer> customers;
 
-    @OneToMany(mappedBy="address",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="address",fetch = FetchType.EAGER, orphanRemoval = true,cascade=CascadeType.REMOVE)
     private List<Staff>staff;
 }

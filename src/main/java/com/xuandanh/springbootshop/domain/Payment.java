@@ -6,7 +6,6 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.List;
 
 @Data
 @Getter
@@ -33,7 +32,7 @@ public class Payment {
     @JoinColumn(name = "staff_id",referencedColumnName = "staff_id")
     private Staff staff;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id",referencedColumnName = "customer_id")
     private Customer customer;
 

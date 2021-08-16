@@ -42,7 +42,7 @@ public class Customer  implements Serializable {
     @Column(name = "last_update")
     private Instant lastUpdate  = Instant.now();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id",referencedColumnName = "address_id")
     private Address address;
 
@@ -50,6 +50,11 @@ public class Customer  implements Serializable {
     @JoinColumn(name = "store_id",referencedColumnName = "store_id")
     private Store store;
 
-    @OneToMany(mappedBy="customer",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="customer",cascade={CascadeType.ALL})
     private List<Payment> payments ;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade={CascadeType.ALL,CascadeType.REMOVE},
+            mappedBy = "customer")
+    private Rental rental;
 }

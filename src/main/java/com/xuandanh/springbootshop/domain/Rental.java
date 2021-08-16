@@ -26,23 +26,23 @@ public class Rental {
 
     @CreatedDate
     @Column(name = "create_date")
-    private Instant createDate;
+    private Instant createDate  = Instant.now();
 
     @Column(name = "return_date")
     private Instant returnDate;
 
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Instant lastUpdate  = Instant.now();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "inventories_id", referencedColumnName = "inventories_id")
     private Inventory inventory;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "staff_id",referencedColumnName = "staff_id")
     private Staff staff;
 

@@ -40,22 +40,22 @@ public class Staff {
     private boolean active;
 
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Instant lastUpdate = Instant.now();
 
     @Column(name = "image_url")
     private String imageUrl;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id",referencedColumnName = "store_id")
     private Store store;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id",referencedColumnName = "address_id")
     private Address address;
 
-    @OneToMany(mappedBy="staff",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="staff",cascade={CascadeType.ALL,CascadeType.REMOVE})
     private List<Rental> rentals;
 
-    @OneToMany(mappedBy="staff",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="staff",cascade={CascadeType.ALL,CascadeType.REMOVE})
     private List<Payment>payments ;
 }
