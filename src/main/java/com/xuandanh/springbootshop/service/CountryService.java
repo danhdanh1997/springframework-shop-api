@@ -59,11 +59,4 @@ public class CountryService {
                     });
     }
 
-    public void deleteCountry(CountryDTO countryDTO){
-        countryRepository.findById(countryDTO.getCountriesId())
-                        .ifPresent(country -> {
-                            countryRepository.delete(country);
-                            log.info("country with id:"+countryDTO.getCountriesId()+" was deleted successfully");
-                        });
-    }
 }

@@ -42,8 +42,8 @@ public class Rental {
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "staff_id",referencedColumnName = "staff_id")
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "staff_id",referencedColumnName = "staff_id",nullable = false)
     private Staff staff;
 
     @OneToMany(mappedBy="rental",cascade=CascadeType.ALL)

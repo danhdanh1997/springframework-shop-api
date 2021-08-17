@@ -58,7 +58,7 @@ public class AddressResources {
         if(addressDTO.isPresent()){
             log.info("Address with id:"+addressId+" was founded");
             response.put("Address with id:"+addressId+" was founded",Boolean.TRUE);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(addressDTO);
         }
         response.put("Address with id:"+addressId+" not exist",Boolean.FALSE);
         log.error("Address with id:"+addressId+" not exist");

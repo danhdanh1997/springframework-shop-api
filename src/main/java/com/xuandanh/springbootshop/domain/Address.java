@@ -33,21 +33,19 @@ public class Address  implements Serializable {
     @Column(name = "last_update")
     private Instant lastUpdate = Instant.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cities_id",referencedColumnName = "cities_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "cities_id",referencedColumnName = "cities_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private City city;
-
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade={CascadeType.ALL,CascadeType.REMOVE},
             mappedBy = "address")
     private Store store;
 
-    @Transient
-    @Fetch(value= FetchMode.SELECT)
     @OneToMany(mappedBy="address", cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval = true)
     private List<Customer> customers;
 
-    @OneToMany(mappedBy="address",fetch = FetchType.EAGER, orphanRemoval = true,cascade=CascadeType.REMOVE)
+    @OneToMany(mappedBy="address",orphanRemoval = true,cascade=CascadeType.REMOVE)
     private List<Staff>staff;
 }

@@ -2,6 +2,8 @@ package com.xuandanh.springbootshop.domain;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -42,15 +44,17 @@ public class Customer  implements Serializable {
     @Column(name = "last_update")
     private Instant lastUpdate  = Instant.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id",referencedColumnName = "address_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "address_id",referencedColumnName = "address_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Address address;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id",referencedColumnName = "store_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "store_id",referencedColumnName = "store_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Store store;
 
-    @OneToMany(mappedBy="customer",cascade={CascadeType.ALL})
+    @OneToMany(mappedBy="customer")
     private List<Payment> payments ;
 
     @OneToOne(fetch = FetchType.LAZY,

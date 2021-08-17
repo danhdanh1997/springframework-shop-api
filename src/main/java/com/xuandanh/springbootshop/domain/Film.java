@@ -2,6 +2,9 @@ package com.xuandanh.springbootshop.domain;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
@@ -53,11 +56,12 @@ public class Film {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "language_id",referencedColumnName = "language_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "language_id",referencedColumnName = "language_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Language language;
 
-    @OneToMany(mappedBy="film",cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval = true)
+    @OneToMany(mappedBy="film",cascade={CascadeType.ALL})
     private List<Inventory> inventories;
 
 }

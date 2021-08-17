@@ -2,8 +2,11 @@ package com.xuandanh.springbootshop.domain;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.List;
 
@@ -45,12 +48,15 @@ public class Staff {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id",referencedColumnName = "store_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @NotNull
+    @JoinColumn(name = "store_id",referencedColumnName = "store_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Store store;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id",referencedColumnName = "address_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "address_id",referencedColumnName = "address_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Address address;
 
     @OneToMany(mappedBy="staff",cascade={CascadeType.ALL,CascadeType.REMOVE})

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -23,12 +25,13 @@ public class Inventory {
     @Column(name = "last_update")
     private Instant lastUpdate = Instant.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "film_id",referencedColumnName = "film_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "film_id",referencedColumnName = "film_id",nullable = false)
     private Film film;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id",referencedColumnName = "store_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "store_id",referencedColumnName = "store_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Store store;
 
     @OneToOne(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)

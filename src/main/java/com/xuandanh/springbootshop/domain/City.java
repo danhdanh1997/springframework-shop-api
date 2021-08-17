@@ -1,8 +1,11 @@
 package com.xuandanh.springbootshop.domain;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
@@ -26,10 +29,12 @@ public class City implements Serializable {
     @Column(name = "last_update")
     private Instant lastUpdate = Instant.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "countries_id",referencedColumnName = "countries_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @NotNull
+    @JoinColumn(name = "countries_id",referencedColumnName = "countries_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Country country;
 
-    @OneToMany(mappedBy="city",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="city", cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval = true)
     private List<Address> addresses;
 }

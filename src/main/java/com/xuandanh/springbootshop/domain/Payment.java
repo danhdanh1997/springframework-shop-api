@@ -28,15 +28,15 @@ public class Payment {
     @Column(name = "payment_date")
     private Instant paymentDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "staff_id",referencedColumnName = "staff_id")
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    @JoinColumn(name = "staff_id",referencedColumnName = "staff_id",nullable = false)
     private Staff staff;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id",referencedColumnName = "customer_id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "customer_id",referencedColumnName = "customer_id",nullable = false)
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rental_id",referencedColumnName = "rental_id")
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    @JoinColumn(name = "rental_id",referencedColumnName = "rental_id",nullable = false)
     private Rental rental;
 }

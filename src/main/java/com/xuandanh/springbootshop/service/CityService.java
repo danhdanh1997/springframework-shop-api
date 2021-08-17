@@ -70,7 +70,6 @@ public class CityService {
                     .map(city1 -> {
                         city1.setCitiesId(city.getCitiesId());
                         city1.setCitiesName(city.getCitiesName());
-                        city1.setAddresses(city.getAddresses());
                         city1.setLastUpdate(city.getLastUpdate());
                         return cityMapper.cityToCityDTO(cityRepository.save(city1));
                     });

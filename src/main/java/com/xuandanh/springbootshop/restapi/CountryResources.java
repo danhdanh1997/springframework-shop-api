@@ -3,6 +3,8 @@ package com.xuandanh.springbootshop.restapi;
 import com.xuandanh.springbootshop.domain.Country;
 import com.xuandanh.springbootshop.dto.CountryDTO;
 import com.xuandanh.springbootshop.exception.MyResourceNotFoundException;
+import com.xuandanh.springbootshop.exception.ResourceNotFoundException;
+import com.xuandanh.springbootshop.repository.CountryRepository;
 import com.xuandanh.springbootshop.service.CountryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +21,19 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class CountryResources {
     private final CountryService countryService;
+    private final CountryRepository countryRepository;
     private final Logger log = LoggerFactory.getLogger(CountryResources.class);
     public CountryService getCountryService() {
         return countryService;
     }
 
-    public CountryResources(CountryService countryService){
+    public CountryRepository getCountryRepository() {
+        return countryRepository;
+    }
+
+    public CountryResources(CountryService countryService, CountryRepository countryRepository){
         this.countryService = countryService;
+        this.countryRepository = countryRepository ;
     }
 
     @GetMapping("/country/findOne/{countriesId}")
@@ -80,18 +88,12 @@ public class CountryResources {
 
     @DeleteMapping("/country/deleteCountry/{countriesId}")
     public ResponseEntity<?> delete(@PathVariable("countriesId") int countriesId){
-        Optional<CountryDTO>countryDTO = countryService.findOne(countriesId);
         Map<String,Boolean>response = new HashMap<>();
-        try {
-            if(countryDTO.isPresent()){
-                log.info("deleted country with id:"+countriesId+" successfully");
-                response.put("deleted country with id:"+countriesId+" successfully",Boolean.TRUE);
-                return ResponseEntity.ok(response);
-            }
-            return ResponseEntity.ok(Optional.empty());
-        }catch (MyResourceNotFoundException e){
-            log.error("country with id:"+countriesId+" not exist");
-            throw new MyResourceNotFoundException("country with id:"+countriesId+" not exist");
-        }
+        return countryRepository.findById(countriesId)
+                .map(country -> {
+                    countryRepository.delete(country);
+                    response.put("deleted country succsessfully",Boolean.TRUE);
+                    return ResponseEntity.ok(response);
+                }).orElseThrow(()->new ResourceNotFoundException("country with id:"+countriesId+" not exist"));
     }
 }

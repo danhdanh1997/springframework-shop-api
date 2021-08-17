@@ -6,8 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Getter
@@ -28,6 +27,6 @@ public class Country implements Serializable {
     @Column(name = "last_update")
     private Instant lastUpdate = Instant.now();
 
-    @OneToMany(mappedBy="country",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<City>cities = new HashSet<>();
+    @OneToMany(mappedBy="country", cascade={CascadeType.ALL,CascadeType.REMOVE},orphanRemoval = true)
+    private List<City>cities;
 }
